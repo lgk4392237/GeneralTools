@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="RequestHandler.cs~RF58da8214.TMP" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="LitJson" Version="0.16.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    <PackageReference Include="NPOI" Version="2.5.1" />
+    <PackageReference Include="QRCoder" Version="1.3.9" />
+    <PackageReference Include="ThoughtWorks.QRCode.Core" Version="1.0.1.2" />
+  </ItemGroup>
+
+</Project>
