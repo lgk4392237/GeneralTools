@@ -46,7 +46,7 @@ namespace GeneralTools
         /// </summary>
         /// <param name="url"></param>
         /// <returns></returns>
-        public string PostResponse<T>(string url, T obj)
+        public static string PostResponse<T>(string url, T obj)
         {
             try
             {

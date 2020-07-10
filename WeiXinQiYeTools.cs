@@ -105,5 +105,27 @@ namespace GeneralTools
 
             return configStr;
         }
+        /// <summary>
+        /// 发送微信模板消息
+        /// </summary>
+        /// <param name="token">AccessToken</param>
+        /// <param name="templateID">模板ID</param>
+        /// <param name="toOpenID">接受用户的OpenID</param>
+        /// <param name="first">标题</param>
+        /// <param name="remark">备注</param>
+        /// <param name="keywords">多个消息内容体</param>
+        /// <param name="linkUrl">跳转的链接</param>
+        /// <returns></returns>
+        public string SendTemplateMess(string token, string templateID, string toOpenID, string first, string remark, string[] keywords, string linkUrl = null)
+        {
+            string postData = "{ \"touser\":\"" + toOpenID + "\","
+                               + "\"template_id\":\"" + templateID + "\",";
+            if (!string.IsNullOrEmpty(linkUrl)) postData += "\"url\":\"" + linkUrl + "\",";
+            postData += "\"topcolor\":\"#FF0000\",\"data\":{\"first\":{\"value\":\"" + first + "\"},";
+            for (int i = 0; i < keywords.Length; i++) { postData += "\"keyword" + (i + 1) + "\":{\"value\":\"" + keywords[i] + "\"},"; }
+            postData += "\"remark\":{\"value\":\"" + remark + "\"}}}";
+            string result = AjaxTools.PostResponse("https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=" + token, postData);
+            return result;
+        }
     }
 }
