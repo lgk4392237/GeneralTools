@@ -146,5 +146,78 @@ namespace GeneralTools
             TimeSpan ts = dt.ToUniversalTime() - new DateTime(1970, 1, 1, 0, 0, 0, 0);
             return Convert.ToInt64(ts.TotalSeconds).ToString();
         }
+        /// <summary>        
+        /// 时间戳转为C#格式时间        
+        /// </summary>        
+        /// <param name=”timeStamp”></param>        
+        /// <returns></returns>        
+        public DateTime ConvertStringToDateTime(string timeStamp)
+        {
+            DateTime dtStart = TimeZone.CurrentTimeZone.ToLocalTime(new DateTime(1970, 1, 1));
+            long lTime = long.Parse(timeStamp + "0000");
+            TimeSpan toNow = new TimeSpan(lTime);
+            return dtStart.Add(toNow);
+        }
+        /// <summary>
+        /// 校验手机号
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        public bool CheckPhoneIsAble(string CusPhone)
+        {
+            if (CusPhone.Length < 11)
+            {
+                return false;
+            }
+            //电信手机号码正则
+            string dianxin = @"^1[3578][01379]\d{8}$";
+            Regex regexDX = new Regex(dianxin);
+            //联通手机号码正则
+            string liantong = @"^1[34578][01256]\d{8}";
+            Regex regexLT = new Regex(liantong);
+            //移动手机号码正则
+            string yidong = @"^(1[012345678]\d{8}|1[345678][012356789]\d{8})$";
+            Regex regexYD = new Regex(yidong);
+            if (regexDX.IsMatch(CusPhone) || regexLT.IsMatch(CusPhone) || regexYD.IsMatch(CusPhone))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        /// <summary>
+        /// 获取Length位随机数(不重复)
+        /// </summary>
+        /// <param name="Length"></param>
+        /// <returns></returns>
+        public static string GetRandom(int Length)
+        {
+            string allchars = System.Guid.NewGuid().ToString().Replace("-", "");
+            StringBuilder res = new StringBuilder(10);
+            Random rand = new Random();
+            int length1 = Length / 2;
+            for (int i = 0; i < length1; i++)
+            {
+                res.Append(allchars[rand.Next(10)]);
+            }
+            int length2 = Length - length1;
+            for (int i = 0; i < length2; i++)
+            {
+                res.Append(allchars[rand.Next(10, allchars.Length)]);
+            }
+            return res.ToString().ToUpper();
+        }
+        /// <summary>
+        /// 获取字符串的字节长度
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        public static int GetRealLength(string str)
+        {
+            byte[] arr = System.Text.Encoding.Default.GetBytes(str);
+            return arr.Length;
+        }
     }
 }
