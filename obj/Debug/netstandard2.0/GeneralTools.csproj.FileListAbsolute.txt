@@ -7,3 +7,12 @@ F:\自学项目\GeneralTools\obj\Debug\netstandard2.0\GeneralTools.dll
 F:\自学项目\GeneralTools\obj\Debug\netstandard2.0\GeneralTools.pdb
 F:\自学项目\GeneralTools\obj\Debug\netstandard2.0\GeneralTools.csprojAssemblyReference.cache
 F:\自学项目\GeneralTools\obj\Debug\netstandard2.0\GeneralTools.csproj.CoreCompileInputs.cache
+F:\自学项目\工具类库\bin\Debug\netstandard2.0\GeneralTools.deps.json
+F:\自学项目\工具类库\bin\Debug\netstandard2.0\GeneralTools.dll
+F:\自学项目\工具类库\bin\Debug\netstandard2.0\GeneralTools.pdb
+F:\自学项目\工具类库\obj\Debug\netstandard2.0\GeneralTools.csprojAssemblyReference.cache
+F:\自学项目\工具类库\obj\Debug\netstandard2.0\GeneralTools.AssemblyInfoInputs.cache
+F:\自学项目\工具类库\obj\Debug\netstandard2.0\GeneralTools.AssemblyInfo.cs
+F:\自学项目\工具类库\obj\Debug\netstandard2.0\GeneralTools.csproj.CoreCompileInputs.cache
+F:\自学项目\工具类库\obj\Debug\netstandard2.0\GeneralTools.dll
+F:\自学项目\工具类库\obj\Debug\netstandard2.0\GeneralTools.pdb

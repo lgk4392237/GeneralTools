@@ -5,10 +5,10 @@ using System.Text.RegularExpressions;
 
 namespace GeneralTools
 {
-  public class Misc
-  {
-    private int[] pyValue = new int[]
-                {
+    public class Misc
+    {
+        private int[] pyValue = new int[]
+                    {
                 -20319,-20317,-20304,-20295,-20292,-20283,-20265,-20257,-20242,-20230,-20051,-20036,
                 -20032,-20026,-20002,-19990,-19986,-19982,-19976,-19805,-19784,-19775,-19774,-19763,
                 -19756,-19751,-19746,-19741,-19739,-19728,-19725,-19715,-19540,-19531,-19525,-19515,
@@ -42,10 +42,10 @@ namespace GeneralTools
                 -11055,-11052,-11045,-11041,-11038,-11024,-11020,-11019,-11018,-11014,-10838,-10832,
                 -10815,-10800,-10790,-10780,-10764,-10587,-10544,-10533,-10519,-10331,-10329,-10328,
                 -10322,-10315,-10309,-10307,-10296,-10281,-10274,-10270,-10262,-10260,-10256,-10254
-                };
+                    };
 
-    private string[] pyName = new string[]
-            {
+        private string[] pyName = new string[]
+                {
                 "A","Ai","An","Ang","Ao","Ba","Bai","Ban","Bang","Bao","Bei","Ben",
                 "Beng","Bi","Bian","Biao","Bie","Bin","Bing","Bo","Bu","Ba","Cai","Can",
                 "Cang","Cao","Ce","Ceng","Cha","Chai","Chan","Chang","Chao","Che","Chen","Cheng",
@@ -79,61 +79,72 @@ namespace GeneralTools
                 "Za", "Zai","Zan","Zang","Zao","Ze","Zei","Zen","Zeng","Zha","Zhai","Zhan",
                 "Zhang","Zhao","Zhe","Zhen","Zheng","Zhi","Zhong","Zhou","Zhu","Zhua","Zhuai","Zhuan",
                 "Zhuang","Zhui","Zhun","Zhuo","Zi","Zong","Zou","Zu","Zuan","Zui","Zun","Zuo"
-            };
-    /// <summary>
-    /// 汉字转拼音
-    /// </summary>
-    /// <param name="hanzi">要转拼音的汉字</param>
-    /// <returns></returns>
-    public string ChinseToPinYin(string hanzi)
-    {
-      // 匹配中文字符
-      Regex regex = new Regex("^[\u4e00-\u9fa5]$");
-      byte[] array = new byte[2];
-      string pyString = "";
-      int chrAsc = 0;
-      int i1 = 0;
-      int i2 = 0;
-      char[] noWChar = hanzi.ToCharArray();
+                };
+        /// <summary>
+        /// 汉字转拼音
+        /// </summary>
+        /// <param name="hanzi">要转拼音的汉字</param>
+        /// <returns></returns>
+        public string ChinseToPinYin(string hanzi)
+        {
+            // 匹配中文字符
+            Regex regex = new Regex("^[\u4e00-\u9fa5]$");
+            byte[] array = new byte[2];
+            string pyString = "";
+            int chrAsc = 0;
+            int i1 = 0;
+            int i2 = 0;
+            char[] noWChar = hanzi.ToCharArray();
 
-      for (int j = 0; j < noWChar.Length; j++)
-      {
-        // 中文字符
-        if (regex.IsMatch(noWChar[j].ToString()))
-        {
-          array = System.Text.Encoding.Default.GetBytes(noWChar[j].ToString());
-          i1 = (short)(array[0]);
-          i2 = (short)(array[1]);
-          chrAsc = i1 * 256 + i2 - 65536;
-          if (chrAsc > 0 && chrAsc < 160)
-          {
-            pyString += noWChar[j];
-          }
-          else
-          {
-            // 修正部分文字
-            if (chrAsc == -9254)  // 修正“圳”字
-              pyString += "Zhen";
-            else
+            for (int j = 0; j < noWChar.Length; j++)
             {
-              for (int i = (pyValue.Length - 1); i >= 0; i--)
-              {
-                if (pyValue[i] <= chrAsc)
+                // 中文字符
+                if (regex.IsMatch(noWChar[j].ToString()))
                 {
-                  pyString += pyName[i];
-                  break;
+                    array = System.Text.Encoding.Default.GetBytes(noWChar[j].ToString());
+                    i1 = (short)(array[0]);
+                    i2 = (short)(array[1]);
+                    chrAsc = i1 * 256 + i2 - 65536;
+                    if (chrAsc > 0 && chrAsc < 160)
+                    {
+                        pyString += noWChar[j];
+                    }
+                    else
+                    {
+                        // 修正部分文字
+                        if (chrAsc == -9254)  // 修正“圳”字
+                            pyString += "Zhen";
+                        else
+                        {
+                            for (int i = (pyValue.Length - 1); i >= 0; i--)
+                            {
+                                if (pyValue[i] <= chrAsc)
+                                {
+                                    pyString += pyName[i];
+                                    break;
+                                }
+                            }
+                        }
+                    }
                 }
-              }
+                // 非中文字符
+                else
+                {
+                    pyString += noWChar[j].ToString();
+                }
             }
-          }
+            return pyString;
         }
-        // 非中文字符
-        else
+        /// <summary>
+        /// 生成时间戳
+        /// </summary>
+        /// <param name="dt"></param>
+        /// <returns></returns>
+        public string GenerateTimeStamp(DateTime dt)
         {
-          pyString += noWChar[j].ToString();
+            // Default implementation of UNIX time of the current UTC time
+            TimeSpan ts = dt.ToUniversalTime() - new DateTime(1970, 1, 1, 0, 0, 0, 0);
+            return Convert.ToInt64(ts.TotalSeconds).ToString();
         }
-      }
-      return pyString;
     }
-  }
 }

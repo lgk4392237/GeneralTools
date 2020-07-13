@@ -127,5 +127,25 @@ namespace GeneralTools
             string result = AjaxTools.PostResponse("https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=" + token, postData);
             return result;
         }
+        /// <summary>
+        /// 发送被动文本消息
+        /// </summary>
+        /// <param name="token">AccessToken</param>
+        /// <param name="toUserName">接收人</param>
+        /// <param name="fromUserName">发送人</param>
+        /// <param name="content">文本内容</param>
+        /// <returns></returns>
+        public string SendPasNormalMess(string token, string toUserName, string fromUserName, string content)
+        {
+            Misc misc = new Misc();
+            string timeSpan = misc.GenerateTimeStamp(DateTime.Now);
+            string sRespData = "<xml><ToUserName><![CDATA[" + toUserName + "]]></ToUserName>"
+                     + "<FromUserName><![CDATA[" + fromUserName + "]]></FromUserName>"
+                     + "<CreateTime>" + timeSpan + "</CreateTime>"
+                     + "<MsgType><![CDATA[text]]></MsgType>"
+                     + "<Content><![CDATA[" + content + "]]></Content>"
+                     + "</xml>";
+            return sRespData;
+        }
     }
 }
