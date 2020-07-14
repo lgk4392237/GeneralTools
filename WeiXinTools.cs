@@ -8,7 +8,7 @@ namespace GeneralTools
     /// <summary>
     /// 微信企业号工具类
     /// </summary>
-    public class WeiXinQiYeTools
+    public class WeiXinTools
     {
         /// <summary>
         /// 
@@ -146,6 +146,64 @@ namespace GeneralTools
                      + "<Content><![CDATA[" + content + "]]></Content>"
                      + "</xml>";
             return sRespData;
+        }
+        /// <summary>
+        /// 调用微信接口获取带参数永久二维码的ticket
+        /// </summary>
+        /// <param name="token">AccessToken</param>
+        /// <param name="sceneStr">场景值ID（字符串形式的ID），字符串类型，长度限制为1到64</param>
+        /// <returns></returns>
+        public string GetQrcodePermanent(string token,string sceneStr)
+        {
+            string qrcodeUrl = "https://api.weixin.qq.com/cgi-bin/qrcode/create?access_token={0}";//WxQrcodeAPI接口
+            qrcodeUrl = string.Format(qrcodeUrl, token);
+            string postJson = "{\"action_name\": \"QR_LIMIT_STR_SCENE\", \"action_info\": {\"scene\": {\"scene_str\": \"" + sceneStr + "\"}}}";
+            string ReText = AjaxTools.PostResponse(qrcodeUrl, postJson);//post提交
+            return ReText;
+        }
+        /// <summary>
+        /// 调用微信接口获取带参数永久二维码的ticket
+        /// </summary>
+        /// <param name="token">AccessToken</param>
+        /// <param name="sceneId">场景值ID，临时二维码时为32位非0整型，永久二维码时最大值为100000（目前参数只支持1--100000）</param>
+        /// <returns></returns>
+        public string GetQrcodePermanent(string token, int sceneId)
+        {
+            string qrcodeUrl = "https://api.weixin.qq.com/cgi-bin/qrcode/create?access_token={0}";//WxQrcodeAPI接口
+            qrcodeUrl = string.Format(qrcodeUrl, token);
+            string postJson = "{\"action_name\": \"QR_LIMIT_SCENE\", \"action_info\": {\"scene\": {\"scene_id\": \"" + sceneId + "\"}}}";
+            string ReText = AjaxTools.PostResponse(qrcodeUrl, postJson);//post提交
+            return ReText;
+        }
+        /// <summary>
+        /// 调用微信接口获取带参数临时二维码的ticket
+        /// </summary>
+        /// <param name="token">AccessToken</param>
+        /// <param name="sceneStr">场景值ID（字符串形式的ID），字符串类型，长度限制为1到64</param>
+        /// <param name="expirationTime">过期时间</param>
+        /// <returns></returns>
+        public string GetQrcodeTemporary(string token, string sceneStr,TimeSpan expirationTime)
+        {
+            string qrcodeUrl = "https://api.weixin.qq.com/cgi-bin/qrcode/create?access_token={0}";//WxQrcodeAPI接口
+            qrcodeUrl = string.Format(qrcodeUrl, token);
+            string postJson = "{\"expire_seconds\": "+ expirationTime + ", \"action_name\": \"QR_STR_SCENE\", \"action_info\": {\"scene\": {\"scene_str\": " + sceneStr + "}}}";
+            string ReText = AjaxTools.PostResponse(qrcodeUrl, postJson);//post提交
+            return ReText;
+        }
+        /// <summary>
+        /// 调用微信接口获取带参数临时二维码的ticket
+        /// </summary>
+        /// <param name="token">AccessToken</param>
+        /// <param name="sceneId">场景值ID，临时二维码时为32位非0整型，永久二维码时最大值为100000（目前参数只支持1--100000）</param>
+        /// <param name="expirationTime">过期时间</param>
+        /// <returns></returns>
+        public string GetQrcodeTemporary(string token, int sceneId, TimeSpan expirationTime)
+        {
+            string qrcodeUrl = "https://api.weixin.qq.com/cgi-bin/qrcode/create?access_token={0}";//WxQrcodeAPI接口
+            qrcodeUrl = string.Format(qrcodeUrl, token);
+            string postJson = "{\"expire_seconds\": " + expirationTime + ", \"action_name\": \"QR_SCENE\", \"action_info\": {\"scene\": {\"scene_id\": " + sceneId + "}}}";
+            string ReText = AjaxTools.PostResponse(qrcodeUrl, postJson);//post提交
+            return ReText;
         }
     }
 }
